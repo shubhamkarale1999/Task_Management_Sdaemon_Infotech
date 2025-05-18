@@ -56,6 +56,16 @@ namespace Task_Management_Sdaemon_Infotech.Controllers
             if (id != taskManagement.Id)
                 return BadRequest(new { error = "Task ID mismatch" });
 
+            if (!ModelState.IsValid)
+            {
+                var errorMessages = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                return BadRequest(new { error = string.Join(", ", errorMessages) });
+            }
+
             _context.Entry(taskManagement).State = EntityState.Modified;
 
             try
@@ -67,13 +77,9 @@ namespace Task_Management_Sdaemon_Infotech.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!TaskManagementExists(id))
-                {
                     return NotFound(new { error = "Task not found" });
-                }
-                else
-                {
-                    return StatusCode(500, new { error = "Concurrency error while updating task" });
-                }
+
+                return StatusCode(500, new { error = "Concurrency error while updating task" });
             }
             catch (Exception ex)
             {
@@ -81,10 +87,21 @@ namespace Task_Management_Sdaemon_Infotech.Controllers
             }
         }
 
+
         // POST: api/Tasks
         [HttpPost]
         public async Task<ActionResult<TaskManagement>> PostTaskManagement(TaskManagement taskManagement)
         {
+            if (!ModelState.IsValid)
+            {
+                var errorMessages = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                return BadRequest(new { error = string.Join(", ", errorMessages) });
+            }
+
             try
             {
                 taskManagement.CreatedDate = DateTime.Now;
@@ -98,6 +115,7 @@ namespace Task_Management_Sdaemon_Infotech.Controllers
                 return StatusCode(500, new { error = "Error creating task", details = ex.Message });
             }
         }
+
 
         // DELETE: api/Tasks/5
         [HttpDelete("{id}")]

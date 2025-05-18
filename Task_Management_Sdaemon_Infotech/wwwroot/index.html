@@ -21,6 +21,7 @@
         <!-- Task Form -->
         <form id="taskForm" class="mb-4">
             <input type="hidden" id="taskId" />
+            <input type="hidden" id="createdDate" />
             <div class="row g-3 align-items-end">
                 <div class="col-md-3">
                     <input type="text" class="form-control" id="title" placeholder="Task Title" required />
@@ -86,8 +87,7 @@
                                         <button class="btn btn-sm btn-primary me-1" onclick="editTask(${task.id})">Edit</button>
                                         <button class="btn btn-sm btn-danger" onclick="deleteTask(${task.id})">Delete</button>
                                     </td>
-                                </tr>
-                            `;
+                                </tr>`;
                     });
                     $("#taskTable tbody").html(rows);
                 })
@@ -105,7 +105,7 @@
                     $("#description").val(task.description);
                     $("#dueDate").val(task.dueDate ? task.dueDate.split("T")[0] : '');
                     $("#isComplete").val(task.isComplete.toString());
-                   // $("#isCompleteWrapper").removeClass("d-none");
+                    $("#createdDate").val(task.createdDate); // ✅ Set createdDate here
                     $("#submitBtn").text("Update");
                 })
                 .fail(function (xhr) {
@@ -132,15 +132,19 @@
             e.preventDefault();
             const taskId = $("#taskId").val();
             const dueDateVal = $("#dueDate").val();
+
+            // Common fields
             const task = {
                 title: $("#title").val(),
                 description: $("#description").val(),
                 dueDate: dueDateVal ? dueDateVal : null,
-                isComplete: $("#isComplete").val() === "true" // convert to boolean
+                isComplete: $("#isComplete").val() === "true"
             };
 
             if (taskId) {
-                // Update
+                // Add createdDate only for update
+                task.createdDate = $("#createdDate").val();
+
                 $.ajax({
                     url: `${apiUrl}/${taskId}`,
                     type: "PUT",
@@ -151,11 +155,16 @@
                         resetForm();
                     },
                     error: function (xhr) {
-                        showError(xhr.responseJSON?.error || "Failed to update task.");
+                        const errors = xhr.responseJSON?.error;
+                        if (Array.isArray(errors)) {
+                            showError(errors.join(", "));
+                        } else {
+                            showError(errors || "Failed to update task.");
+                        }
                     }
                 });
             } else {
-                // Add
+                // No createdDate while adding
                 $.ajax({
                     url: apiUrl,
                     type: "POST",
@@ -166,7 +175,12 @@
                         resetForm();
                     },
                     error: function (xhr) {
-                        showError(xhr.responseJSON?.error || "Failed to add task.");
+                        const errors = xhr.responseJSON?.error;
+                        if (Array.isArray(errors)) {
+                            showError(errors.join(", "));
+                        } else {
+                            showError(errors || "Failed to add task.");
+                        }
                     }
                 });
             }
@@ -176,8 +190,8 @@
         function resetForm() {
             $("#taskForm")[0].reset();
             $("#taskId").val('');
+            $("#createdDate").val('');
             $("#submitBtn").text("Add");
-            $("#isCompleteWrapper").addClass("d-none");
         }
 
         // Initial load
