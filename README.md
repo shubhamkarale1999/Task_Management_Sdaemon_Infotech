@@ -36,7 +36,7 @@ API Testing: Swagger UI, Postman
 | PUT    | /api/Tasks/{id}   | Update task |
 | DELETE | /api/Tasks/{id}   | Delete task |
 
-## ✅ Sample JSON for Add/Update
+## Sample JSON for Add/Update
 
 ```json
 {
