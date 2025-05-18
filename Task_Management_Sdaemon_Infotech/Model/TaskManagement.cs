@@ -24,5 +24,21 @@ namespace Task_Management_Sdaemon_Infotech.Model
 
         [DisplayName("Is Completed")]
         public bool IsComplete { get; set; }
+
+       // public bool IsActive { get; set; }
+
+        [StringLength(50)]
+        [Display(Name = "Created By")]
+        public string? CreatedBy { get; set; }
+
+        [Display(Name = "Created Date")]
+        public DateTime? CreatedDate { get; set; }
+
+        [StringLength(50)]
+        [Display(Name = "Updated By")]
+        public string? UpdatedBy { get; set; }
+
+        [Display(Name = "Updated Date")]
+        public DateTime? UpdatedDate { get; set; }
     }
 }
