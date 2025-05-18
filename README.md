@@ -2,7 +2,7 @@
 
 A simple yet robust Task Management API built using the latest technologies in .NET 8, Entity Framework Core, and SQL Server 2022. It also includes a lightweight HTML + jQuery front-end for quick interaction.
 
-## 🚀 Tech Stack
+## Tech Stack
 Backend: ASP.NET Core Web API (<TargetFramework>net8.0</TargetFramework>)
 
 Database: Microsoft SQL Server 2022 Developer Edition (64-bit)
@@ -14,7 +14,7 @@ Front-End: HTML, Bootstrap 5, jQuery
 
 API Testing: Swagger UI, Postman
 
-## 🔧 Setup Instructions
+## Setup Instructions
 
 1. Clone the repository:https://github.com/shubhamkarale1999/Task_Management_Sdaemon_Infotech.git
 
@@ -28,12 +28,13 @@ API Testing: Swagger UI, Postman
 
 ## API Endpoints
 
-Method	Endpoint	Description
-GET	/api/Tasks	Get all tasks
-GET	/api/Tasks/{id}	Get task by ID
-POST	/api/Tasks	Add new task
-PUT	/api/Tasks/{id}	Update task
-DELETE	/api/Tasks/{id}	Delete task
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET    | /api/Tasks        | Get all tasks |
+| GET    | /api/Tasks/{id}   | Get task by ID |
+| POST   | /api/Tasks        | Add new task |
+| PUT    | /api/Tasks/{id}   | Update task |
+| DELETE | /api/Tasks/{id}   | Delete task |
 
 ## Sample JSON for Add/Update
 {
