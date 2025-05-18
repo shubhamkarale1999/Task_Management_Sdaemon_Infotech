@@ -20,79 +20,106 @@ namespace Task_Management_Sdaemon_Infotech.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TaskManagement>>> GetTaskManagement()
         {
-            return await _context.TaskManagement.ToListAsync();
+            try
+            {
+                return Ok(await _context.TaskManagement.ToListAsync());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "Internal server error", details = ex.Message });
+            }
         }
 
         // GET: api/Tasks/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TaskManagement>> GetTaskManagement(int id)
         {
-            var taskManagement = await _context.TaskManagement.FindAsync(id);
-
-            if (taskManagement == null)
+            try
             {
-                return NotFound();
+                var task = await _context.TaskManagement.FindAsync(id);
+                if (task == null)
+                {
+                    return NotFound(new { error = "Task not found" });
+                }
+                return Ok(task);
             }
-
-            return taskManagement;
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "Error retrieving task", details = ex.Message });
+            }
         }
 
         // PUT: api/Tasks/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTaskManagement(int id, TaskManagement taskManagement)
         {
             if (id != taskManagement.Id)
-            {
-                return BadRequest();
-            }
+                return BadRequest(new { error = "Task ID mismatch" });
 
             _context.Entry(taskManagement).State = EntityState.Modified;
 
             try
             {
+                taskManagement.UpdatedDate = DateTime.Now;
                 await _context.SaveChangesAsync();
+                return Ok(new { message = "Task updated successfully" });
             }
             catch (DbUpdateConcurrencyException)
             {
                 if (!TaskManagementExists(id))
                 {
-                    return NotFound();
+                    return NotFound(new { error = "Task not found" });
                 }
                 else
                 {
-                    throw;
+                    return StatusCode(500, new { error = "Concurrency error while updating task" });
                 }
             }
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "Error updating task", details = ex.Message });
+            }
         }
 
         // POST: api/Tasks
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<TaskManagement>> PostTaskManagement(TaskManagement taskManagement)
         {
-            _context.TaskManagement.Add(taskManagement);
-            await _context.SaveChangesAsync();
+            try
+            {
+                taskManagement.CreatedDate = DateTime.Now;
+                _context.TaskManagement.Add(taskManagement);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTaskManagement", new { id = taskManagement.Id }, taskManagement);
+                return CreatedAtAction(nameof(GetTaskManagement), new { id = taskManagement.Id }, taskManagement);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "Error creating task", details = ex.Message });
+            }
         }
 
         // DELETE: api/Tasks/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTaskManagement(int id)
         {
-            var taskManagement = await _context.TaskManagement.FindAsync(id);
-            if (taskManagement == null)
+            try
             {
-                return NotFound();
+                var task = await _context.TaskManagement.FindAsync(id);
+                if (task == null)
+                {
+                    return NotFound(new { error = "Task not found" });
+                }
+
+                _context.TaskManagement.Remove(task);
+                await _context.SaveChangesAsync();
+
+                return Ok(new { message = "Task deleted successfully" });
             }
-
-            _context.TaskManagement.Remove(taskManagement);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "Error deleting task", details = ex.Message });
+            }
         }
 
         private bool TaskManagementExists(int id)
