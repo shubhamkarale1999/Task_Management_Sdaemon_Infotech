@@ -1,0 +1,6 @@
+@Task_Management_Sdaemon_Infotech_HostAddress = http://localhost:5083
+
+GET {{Task_Management_Sdaemon_Infotech_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
