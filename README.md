@@ -36,12 +36,14 @@ API Testing: Swagger UI, Postman
 | PUT    | /api/Tasks/{id}   | Update task |
 | DELETE | /api/Tasks/{id}   | Delete task |
 
-## Sample JSON for Add/Update
+## ✅ Sample JSON for Add/Update
+
+```json
 {
-  "title": "Buy groceries",
-  "description": "Milk, Eggs, Bread",
-  "dueDate": "2025-05-20",
-  "isComplete": false
+"title": "Buy groceries",
+"description": "Milk, Eggs, Bread",
+"dueDate": "2025-05-20",
+"isComplete": false
 }
 
 ## Known Limitations (To be improved in future)
