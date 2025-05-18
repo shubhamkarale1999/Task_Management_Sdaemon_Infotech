@@ -4,7 +4,7 @@ A simple task management API built using ASP.NET Core and Entity Framework.
 
 ## 🔧 Setup Instructions
 
-1. Clone the repository:
+1. Clone the repository:https://github.com/shubhamkarale1999/Task_Management_Sdaemon_Infotech.git
 
 2. Open the solution in Visual Studio.
 
