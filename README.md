@@ -36,15 +36,6 @@ API Testing: Swagger UI, Postman
 | PUT    | /api/Tasks/{id}   | Update task |
 | DELETE | /api/Tasks/{id}   | Delete task |
 
-## Sample JSON for Add/Update
-
-```json
-{
-"title": "Buy groceries",
-"description": "Milk, Eggs, Bread",
-"dueDate": "2025-05-20",
-"isComplete": false
-}
 
 ## Known Limitations (To be improved in future)
 - No authentication/authorization.
@@ -56,5 +47,19 @@ API Testing: Swagger UI, Postman
 - Add user login
 - Add filtering, search
 - Improve UI (React, Angular, etc.)
+
+## Sample JSON for Add/Update
+
+```json
+{
+"title": "Buy groceries",
+"description": "Milk, Eggs, Bread",
+"dueDate": "2025-05-20",
+"isComplete": false
+}
+
+
+
+
 
 
