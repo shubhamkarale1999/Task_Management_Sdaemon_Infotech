@@ -1,6 +1,6 @@
 # Task Management API
 
-A simple task management API built using ASP.NET Core and Entity Framework.
+A simple yet robust Task Management API built using the latest technologies in .NET 8, Entity Framework Core, and SQL Server 2022. It also includes a lightweight HTML + jQuery front-end for quick interaction.
 
 ## 🔧 Setup Instructions
 
@@ -10,4 +10,4 @@ A simple task management API built using ASP.NET Core and Entity Framework.
 
 3. Make sure your `appsettings.json` is configured properly. Use SQL Server or InMemory DB.
 
-4. Run the application. Swagger UI will be available at:
+4. Run the application. Swagger UI will be available at:https://localhost:xxxx/swagger
