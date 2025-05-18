@@ -26,3 +26,32 @@ API Testing: Swagger UI, Postman
 
 5. Open `index.html` in your browser to use the front-end.: https://localhost:7240/index.html
 
+## API Endpoints
+
+Method	Endpoint	Description
+GET	/api/Tasks	Get all tasks
+GET	/api/Tasks/{id}	Get task by ID
+POST	/api/Tasks	Add new task
+PUT	/api/Tasks/{id}	Update task
+DELETE	/api/Tasks/{id}	Delete task
+
+## Sample JSON for Add/Update
+{
+  "title": "Buy groceries",
+  "description": "Milk, Eggs, Bread",
+  "dueDate": "2025-05-20",
+  "isComplete": false
+}
+
+## Known Limitations (To be improved in future)
+- No authentication/authorization.
+- No pagination/filtering yet.
+- Front-end is a static HTML + jQuery form.
+- Could improve error handling and UX.
+
+## Future Improvements
+- Add user login
+- Add filtering, search
+- Improve UI (React, Angular, etc.)
+
+
